@@ -44,11 +44,17 @@
       <div class="menu-wrapper">
         <button class="menu-btn" title="Ambient Sounds">🌧️</button>
         <div class="menu-content">
-          <button onclick="document.getElementById('rain').play()">Rain</button>
-          <button onclick="document.getElementById('cafe').play()">Cafe</button>
+          <button id="btn-rain" onclick="toggleSound('rain', this)">Rain</button>
+          <div class="slider-container">
+              <input type="range" min="0" max="1" step="0.01" value="0.5" onchange="setVolume('rain', this.value)">
+          </div>
+          <button id="btn-cafe" onclick="toggleSound('cafe', this)">Cafe</button>
+          <div class="slider-container">
+              <input type="range" min="0" max="1" step="0.01" value="0.5" onchange="setVolume('cafe', this.value)">
+          </div>
         </div>
       </div>
-    
+      
       <!-- YouTube Menu -->
       <div class="menu-wrapper">
         <button class="menu-btn" title="Lofi YouTube">🎵</button>

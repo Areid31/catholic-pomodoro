@@ -58,6 +58,23 @@ document.querySelectorAll('.menu-btn').forEach(btn => {
   });
 });
 
+// click outside to close
+document.addEventListener('click', (e) => {
+  document.querySelectorAll('.menu-wrapper').forEach(wrapper => {
+    if (!wrapper.contains(e.target)) {
+      wrapper.querySelector('.menu-content').style.display = 'none';
+    }
+  });
+});
+
+function toggleSound(id) {
+  const audio = document.getElementById(id);
+  if (audio.paused) {
+    audio.play();
+  } else {
+    audio.pause();
+  }
+}
 
 function setVolume(id, value) { document.getElementById(id).volume = value; }
 
@@ -105,15 +122,6 @@ function toggleFullScreen() {
   } else {
     document.exitFullscreen();
   }
-}
-
-/* === Music Buttons Skeleton === */
-function playYouTube() {
-  alert("YouTube Lofi play logic here");
-}
-
-function playSpotify() {
-  alert("Spotify play logic here");
 }
 
 /* === Quotes Skeleton === */

@@ -120,6 +120,39 @@ body {
   gap: 5px;               /* spacing between items */
 }
 
+.menu-content button {
+  margin: 0 5px !important;
+  font-size: 1em !important;
+  color: White !important;
+  background: #3498db !important;; /* optional for visibility */
+  border: none;
+  border-radius: 5px;
+}
+
+.menu-content button:hover {
+  background: #65acdb !important;
+}
+
+/* Slider track */
+input[type="range"] {
+  -webkit-appearance: none;
+  width: 150px;
+  height: 6px;
+  border-radius: 3px;
+  background: white;
+}
+
+/* Slider thumb (the draggable knob) */
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;   /*-webkit styling only wokrs for Chrom and Safari*/
+  width: 16px;
+  height: 16px;
+  background: white;          /* thumb color */
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid #94abbb; /* optional border */
+}
+
 .audio-icons button {
   font-size: 1.5em;
   margin: 0 5px;
