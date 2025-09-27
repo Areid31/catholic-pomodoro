@@ -95,6 +95,31 @@ body {
   color: white;
   z-index: 10;
 }
+
+.audio-icons {
+  display: flex;         /* horizontal layout */
+  gap: 10px;             /* space between icons */
+  align-items: center;   /* vertically center if needed */
+}
+
+.menu-wrapper {
+  position: relative; /* keeps menu-content relative to button */
+}
+
+.menu-content {
+  display: none;          /* hidden by default */
+  position: fixed;        /* position relative to viewport */
+  bottom: 60px;           /* distance from bottom of page */
+  left: 10px;             /* distance from left edge */
+  background: rgba(0,0,0,0.8);
+  padding: 5px;
+  border-radius: 5px;
+  z-index: 20;
+  white-space: nowrap;    
+  flex-direction: row;    /* horizontal menu items */
+  gap: 5px;               /* spacing between items */
+}
+
 .audio-icons button {
   font-size: 1.5em;
   margin: 0 5px;
