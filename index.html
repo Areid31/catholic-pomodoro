@@ -3,65 +3,46 @@
 <head>
   <meta charset="UTF-8">
   <title>Pomodoro Web App</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Arial', sans-serif;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      color: white;
-      text-align: center;
-      background: linear-gradient(270deg, #ff9a9e, #fad0c4, #a18cd1, #fbc2eb);
-      background-size: 800% 800%;
-      animation: gradientShift 30s ease infinite;
-    }
-    @keyframes gradientShift {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-    h1 { margin-bottom: 10px; }
-    #timer { font-size: 5em; margin: 20px; }
-    #mode { font-size: 1.2em; margin-bottom: 10px; }
-    button {
-      padding: 10px 20px;
-      margin: 5px;
-      font-size: 1em;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      color: white;
-    }
-    .control { background: #3498db; }
-    .control:hover { background: #2980b9; }
-    .mixer {
-      margin-top: 30px;
-      background: rgba(0,0,0,0.3);
-      padding: 15px;
-      border-radius: 10px;
-    }
-    .slider-container { margin: 10px 0; }
-    input[type=range] { width: 200px; }
-    iframe { border-radius: 10px; margin: 10px 0; }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
   <h1>Pomodoro Timer</h1>
   <div id="mode">Work Session</div>
   <div id="timer">25:00</div>
+
   <div>
     <button class="control" onclick="startTimer()">Start</button>
     <button class="control" onclick="pauseTimer()">Pause</button>
     <button class="control" onclick="resetTimer()">Reset</button>
   </div>
 
+  <!-- Background Selector -->
+  <div class="background-selector">
+    <label for="bgSelect">Choose Background:</label>
+    <select id="bgSelect" onchange="changeBackground(this.value)">
+      <option value="church_interior.jpg">Church</option>
+      <option value="sunset.jpg">Sunset</option>
+      <option value="rain.gif">Rain</option>
+      <option value="lofi.mp4">Lofi Video</option>
+    </select>
+  </div>
+
+  <!-- Video Background -->
+  <video autoplay muted loop id="bgVideo" style="display:none;">
+    <source id="bgVideoSrc" src="" type="video/mp4">
+  </video>
+
+  <!-- Moving Background Video -->
+  <!-- <video autoplay loop muted id="bgVideoMoving">
+    <source src="backgrounds/pomodoro.mp4" type="video/mp4">
+  </video> -->
+
+
+  <!-- Audio Mixer -->
   <div class="mixer">
     <h3>Audio Mixer</h3>
 
-    <!-- YouTube Lofi Embed -->
     <div>
       <p>Lofi Music (YouTube)</p>
       <iframe width="300" height="150" 
@@ -70,7 +51,6 @@
       </iframe>
     </div>
 
-    <!-- Spotify Playlist Embed -->
     <div>
       <p>Spotify Playlist</p>
       <iframe style="border-radius:12px" 
@@ -80,16 +60,17 @@
       </iframe>
     </div>
 
-    <!-- Ambient / White Noise Mixer -->
     <div>
       <p>Ambient Sounds</p>
       <audio id="rain" loop>
         <source src="audio/calming-rain-257596.mp3" type="audio/mpeg">
       </audio>
       <button onclick="document.getElementById('rain').play()">Play Rain</button>         
+
       <audio id="cafe" loop>
         <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" type="audio/mpeg">
       </audio>      
+
       <div class="slider-container">
         <label>Rain Volume: <input type="range" min="0" max="1" step="0.01" value="0.5" onchange="setVolume('rain', this.value)"></label>
       </div>
@@ -100,43 +81,6 @@
     </div>
   </div>
 
-  <script>
-    /* === Timer Logic === */
-    let workTime = 25*60, shortBreak = 5*60, longBreak = 15*60, cycles=0;
-    let time = workTime, timerInterval, isRunning=false, mode="work";
-
-    function updateDisplay() {
-      let minutes = Math.floor(time/60);
-      let seconds = time%60;
-      document.getElementById("timer").textContent = `${minutes}:${seconds.toString().padStart(2,'0')}`;
-      document.getElementById("mode").textContent =
-        mode==="work"?"Work Session":mode==="short"?"Short Break":"Long Break";
-    }
-
-    function switchMode(){
-      if(mode==="work"){ cycles++; mode=cycles%4===0?"long":"short"; time=mode==="long"?longBreak:shortBreak; }
-      else{ mode="work"; time=workTime; }
-      updateDisplay();
-    }
-
-    function startTimer(){
-      if(!isRunning){ isRunning=true; timerInterval=setInterval(()=>{
-        if(time>0){ time--; updateDisplay(); } 
-        else{ clearInterval(timerInterval); isRunning=false; alert("Time's up!"); switchMode(); startTimer(); }
-      },1000);}
-    }
-
-    function pauseTimer(){ clearInterval(timerInterval); isRunning=false; }
-    function resetTimer(){ clearInterval(timerInterval); isRunning=false; mode="work"; time=workTime; cycles=0; updateDisplay(); }
-    updateDisplay();
-
-    /* === Ambient Audio === */
-    function playAmbient(){
-      document.getElementById("rain").play();
-      document.getElementById("cafe").play();
-    }
-
-    function setVolume(id, value){ document.getElementById(id).volume = value; }
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
