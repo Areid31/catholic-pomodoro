@@ -7,79 +7,75 @@
 </head>
 
 <body>
-  <h1>Pomodoro Timer</h1>
-  <div id="mode">Work Session</div>
-  <div id="timer">25:00</div>
-
-  <div>
-    <button class="control" onclick="startTimer()">Start</button>
-    <button class="control" onclick="pauseTimer()">Pause</button>
-    <button class="control" onclick="resetTimer()">Reset</button>
-  </div>
-
-  <!-- Background Selector -->
-  <div class="background-selector">
-    <label for="bgSelect">Choose Background:</label>
-    <select id="bgSelect" onchange="changeBackground(this.value)">
-      <option value="church_interior.jpg">Church</option>
-      <option value="sunset.jpg">Sunset</option>
-      <option value="rain.gif">Rain</option>
-      <option value="lofi.mp4">Lofi Video</option>
-    </select>
-  </div>
-
-  <!-- Video Background -->
+  <!-- Background video -->
   <video autoplay muted loop id="bgVideo" style="display:none;">
     <source id="bgVideoSrc" src="" type="video/mp4">
   </video>
 
-  <!-- Moving Background Video -->
-  <!-- <video autoplay loop muted id="bgVideoMoving">
-    <source src="backgrounds/pomodoro.mp4" type="video/mp4">
-  </video> -->
+  <!-- Dark overlay -->
+  <div class="background-overlay"></div>
 
+  <!-- Top Left: App Name -->
+  <div class="top-left">
+    <h2>Pomodoro Web App</h2>
+  </div>
 
-  <!-- Audio Mixer -->
-  <div class="mixer">
-    <h3>Audio Mixer</h3>
+  <!-- Top Right: Quotes -->
+  <div class="top-right" id="quoteBox">
+    <p id="quoteText">"Your quote will appear here."</p>
+  </div>
 
-    <div>
-      <p>Lofi Music (YouTube)</p>
-      <iframe width="300" height="150" 
-        src="https://www.youtube.com/embed/jfKfPfyJRdk?autoplay=0" 
-        frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
-      </iframe>
-    </div>
-
-    <div>
-      <p>Spotify Playlist</p>
-      <iframe style="border-radius:12px" 
-        src="https://open.spotify.com/embed/playlist/37i9dQZF1DWYcDQ1hSjOpY?utm_source=generator" 
-        width="300" height="80" frameBorder="0" 
-        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture">
-      </iframe>
-    </div>
-
-    <div>
-      <p>Ambient Sounds</p>
-      <audio id="rain" loop>
-        <source src="audio/calming-rain-257596.mp3" type="audio/mpeg">
-      </audio>
-      <button onclick="document.getElementById('rain').play()">Play Rain</button>         
-
-      <audio id="cafe" loop>
-        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" type="audio/mpeg">
-      </audio>      
-
-      <div class="slider-container">
-        <label>Rain Volume: <input type="range" min="0" max="1" step="0.01" value="0.5" onchange="setVolume('rain', this.value)"></label>
-      </div>
-      <div class="slider-container">
-        <label>Cafe Volume: <input type="range" min="0" max="1" step="0.01" value="0.5" onchange="setVolume('cafe', this.value)"></label>
-      </div>
-      <button class="control" onclick="playAmbient()">Play Ambient</button>
+  <!-- Center: Timer -->
+  <div class="center-timer">
+    <h1>Pomodoro Timer</h1>
+    <div id="mode">Work Session</div>
+    <div id="timer">25:00</div>
+    <div class="timer-buttons">
+      <button class="control" onclick="startTimer()">Start</button>
+      <button class="control" onclick="pauseTimer()">Pause</button>
+      <button class="control" onclick="resetTimer()">Reset</button>
     </div>
   </div>
+
+  <!-- Bottom Left: Audio Controls -->
+  <div class="bottom-left">
+    <h3>Audio Mixer</h3>
+    <div class="audio-icons">
+      <button onclick="document.getElementById('rain').play()" title="Play Rain">🌧️</button>
+      <button onclick="document.getElementById('cafe').play()" title="Play Cafe">☕</button>
+      <button onclick="playYouTube()" title="Play Lofi YouTube">🎵</button>
+      <button onclick="playSpotify()" title="Play Spotify">🎶</button>
+    </div>
+  </div>
+  
+
+  <!-- Bottom Right Panel -->
+  <div class="bottom-right-panel">
+    <!-- Background Selector -->
+    <div class="background-selector">
+      <label for="bgSelect">Choose Background:</label>
+      <select id="bgSelect" onchange="changeBackground(this.value)">
+        <option value="gradient">Gradient</option>
+        <option value="church_interior.jpg">Church</option>
+        <option value="pexels-aleksandar069-11239782.jpg">Sunset</option>
+        <option value="pexels-canaros-2182359.jpg">Rain</option>
+        <option value="pexels-pixabay-208425.jpg">Lofi Video</option>
+      </select>
+    </div>
+
+    <!-- Full-Screen Icon Button -->
+    <button id="fullscreenBtn" class="fullscreen-btn" onclick="toggleFullScreen()">
+      ⛶
+    </button>
+  </div>
+
+  <!-- Ambient Audio -->
+  <audio id="rain" loop>
+    <source src="audio/calming-rain-257596.mp3" type="audio/mpeg">
+  </audio>
+  <audio id="cafe" loop>
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" type="audio/mpeg">
+  </audio>
 
   <script src="script.js"></script>
 </body>

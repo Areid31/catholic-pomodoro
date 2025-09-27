@@ -45,29 +45,81 @@ function resetTimer(){
 updateDisplay();
 
 /* === Ambient Audio === */
-function playAmbient(){
-  document.getElementById("rain").play();
-  document.getElementById("cafe").play();
+function playAmbient() {
+  document.getElementById('rain').play();
+  document.getElementById('cafe').play();
 }
 
-function setVolume(id, value){ document.getElementById(id).volume = value; }
+function setVolume(id, value) { document.getElementById(id).volume = value; }
 
 /* === Background Chooser === */
-function changeBackground(fileName){
+function changeBackground(fileName) {
   const body = document.body;
-  const video = document.getElementById('bgVideoSrc');
+  const video = document.getElementById('bgVideo');
   const videoSrc = document.getElementById('bgVideoSrc');
+  const overlay = document.querySelector('.background-overlay');
 
+  // Reset
   body.style.backgroundImage = '';
+  body.style.animation = '';
   video.style.display = 'none';
+  overlay.style.background = 'rgba(0,0,0,0)'; // default transparent
 
-  if(fileName.endsWith('.mp4')){
+  if (fileName === 'gradient') {
+    body.style.background = 'linear-gradient(270deg, #ff9a9e, #fad0c4, #a18cd1, #fbc2eb)';
+    body.style.backgroundSize = '800% 800%';
+    body.style.animation = 'gradientShift 30s ease infinite';
+  } 
+  else if (fileName.endsWith('.mp4')) {
+    video.style.display = 'block';
     videoSrc.src = `backgrounds/${fileName}`;
     video.load();
-    video.style.display = 'block';
-  } else {
-    body.style.backgroundImage = `url('backgrounds/${fileName}')`;
+    video.play();
+  } 
+  else {
+    body.style.background = `url('backgrounds/${fileName}') no-repeat center center fixed`;
     body.style.backgroundSize = 'cover';
-    body.style.backgroundPosition = 'center';
+
+    // Example: dark overlay only for church or night images
+    if (fileName === 'church_interior.jpg' || fileName === 'night_sky.jpg') {
+      overlay.style.background = 'rgba(0,0,0,0.4)';
+    }
   }
 }
+
+/* === Full-Screen Toggle === */
+function toggleFullScreen() {
+  if (!document.fullscreenElement) {
+    document.documentElement.requestFullscreen().catch((err) => {
+      alert(`Error attempting to enable full-screen mode: ${err.message}`);
+    });
+  } else {
+    document.exitFullscreen();
+  }
+}
+
+/* === Music Buttons Skeleton === */
+function playYouTube() {
+  alert("YouTube Lofi play logic here");
+}
+
+function playSpotify() {
+  alert("Spotify play logic here");
+}
+
+/* === Quotes Skeleton === */
+const quotes = [
+  "Quote 1",
+  "Quote 2",
+  "Quote 3"
+];
+
+function showRandomQuote() {
+  const quoteText = document.getElementById('quoteText');
+  const random = quotes[Math.floor(Math.random() * quotes.length)];
+  quoteText.textContent = random;
+}
+
+// Example: change quote every 30 seconds
+setInterval(showRandomQuote, 30000);
+showRandomQuote();
