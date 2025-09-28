@@ -5,6 +5,9 @@
   <title>Catholic Pomodoro</title>
   <link rel="stylesheet" href="style.css">
   <link rel="icon" href="favicon/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@900&display=swap" rel="stylesheet">
+
 </head>
 
 <body>
@@ -43,6 +46,10 @@
     </div>
   </div>
 
+  <audio id="alarmSound">
+    <source src="audio/alarm-2-375697.mp3" type="audio/mpeg">
+  </audio>
+
   <!-- Bottom Left: Audio Controls -->
   <div class="bottom-left">
     <div class="audio-icons">
@@ -66,7 +73,7 @@
         <button class="menu-btn" title="Lofi YouTube">🎵</button>
         <div class="menu-content">
           <iframe width="300" height="150" 
-            src="https://www.youtube.com/embed/jfKfPfyJRdk?autoplay=0" 
+            src="https://www.youtube.com/embed/7oijjSxs1ic?autoplay=0" 
             frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
           </iframe>
         </div>
@@ -77,33 +84,13 @@
         <button class="menu-btn" title="Spotify">🎶</button>
         <div class="menu-content">
           <iframe style="border-radius:12px" 
-            src="https://open.spotify.com/embed/playlist/37i9dQZF1DWYcDQ1hSjOpY?utm_source=generator" 
+            src="https://open.spotify.com/embed/artist/4ZA0g9A7x6NyiDoowyyKNF?utm_source=generator" 
             width="300" height="80" frameborder="0" 
             allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture">
           </iframe>
         </div>
       </div>
-    
     </div>    
-
-  <!-- Bottom Right Panel -->
-  <div class="bottom-right-panel">
-    <!-- Background Selector -->
-    <div class="background-selector">
-      <label for="bgSelect">Choose Background:</label>
-      <select id="bgSelect" onchange="changeBackground(this.value)">
-        <option value="gradient">Gradient</option>
-        <option value="church_interior.jpg">Church</option>
-        <option value="pexels-aleksandar069-11239782.jpg">Sunset</option>
-        <option value="pexels-canaros-2182359.jpg">Rain</option>
-        <option value="14424684_3840_2160_30fps.mp4">Lofi Video</option>
-      </select>
-    </div>
-
-    <!-- Full-Screen Icon Button -->
-    <button id="fullscreenBtn" class="fullscreen-btn" onclick="toggleFullScreen()">
-      ⛶
-    </button>
   </div>
 
   <!-- Ambient Audio -->
@@ -111,8 +98,32 @@
     <source src="audio/calming-rain-257596.mp3" type="audio/mpeg">
   </audio>
   <audio id="cafe" loop>
-    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" type="audio/mpeg">
+    <source src="audio/cafe-noise-32940.mp3" type="audio/mpeg">
   </audio>
+
+  <!-- Bottom Right Panel -->
+  <div class="bottom-right-panel">
+    <!-- Background Selector -->
+    <button id="bgChangeBtn" onclick="openBgModal()" title="Change Background"><i class="far fa-image"></i></button>
+    <div id="bgModal" class="modal">
+      <div class="modal-content">
+        <span class="close" onclick="closeBgModal()">&times;</span>
+        <h3>Select a Background</h3>
+        <div class="bg-grid">
+          <img src="backgrounds/pexels-codioful-7130560.jpg" onclick="changeBackground('gradient')">
+          <img src="backgrounds/church_interior.jpg" alt="Church" onclick="changeBackground('church_interior.jpg')">
+          <img src="backgrounds/pexels-aleksandar069-11239782.jpg" alt="Sunset" onclick="changeBackground('pexels-aleksandar069-11239782.jpg')">
+          <img src="backgrounds/pexels-canaros-2182359.jpg" alt="Rain" onclick="changeBackground('pexels-canaros-2182359.jpg')">
+          <img src="backgrounds/pexels-castorlystock-3836343.jpg" alt="Lofi Video" onclick="changeBackground('pexels-castorlystock-3836343.jpg')">
+        </div>
+      </div>
+    </div>
+
+    <!-- Full-Screen Icon Button -->
+    <button id="fullscreenBtn" class="fullscreen-btn" onclick="toggleFullScreen()">
+      ⛶
+    </button>
+  </div>
 
   <script src="script.js"></script>
 </body>

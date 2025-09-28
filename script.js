@@ -1,5 +1,5 @@
 /* === Timer Logic === */
-let workTime = 25*60, shortBreak = 5*60, longBreak = 15*60, cycles=0;
+let workTime = 25*60, shortBreak = 0.5*60, longBreak = 15*60, cycles=0;
 let time = workTime, timerInterval, isRunning=false, mode="work";
 
 function updateDisplay() {
@@ -39,18 +39,29 @@ function setMode(newMode) {
   updateDisplay();
 }
 
-function startTimer(){
-  if(!isRunning){ 
-    isRunning=true; 
-    timerInterval=setInterval(()=>{
-      if(time>0){ 
-        time--; updateDisplay(); 
-      } else { 
-        clearInterval(timerInterval); isRunning=false; 
-        alert("Time's up!"); 
-        switchMode(); startTimer(); 
+function startTimer() {
+  if (!isRunning) {
+    isRunning = true;
+    timerInterval = setInterval(() => {
+      if (time > 0) {
+        time--;
+        updateDisplay();
+      } else {
+        clearInterval(timerInterval);
+        isRunning = false;
+
+        // Play alarm immediately
+        document.getElementById('alarmSound').play();
+
+        // Show alert after a tiny delay so sound starts
+        setTimeout(() => {
+          alert("Time's up!");
+          switchMode();
+          startTimer();
+        }, 50);
+
       }
-    },1000);
+    }, 1000);
   }
 }
 
@@ -65,6 +76,10 @@ updateDisplay();
 function playAmbient() {
   document.getElementById('rain').play();
   document.getElementById('cafe').play();
+}
+
+function setVolume(id, value) { 
+  document.getElementById(id).volume = value; 
 }
 
 // Toggle visibility for each menu section (no styling changes)
@@ -128,6 +143,10 @@ function changeBackground(fileName) {
   }
 }
 
+function openBgModal() { document.getElementById('bgModal').style.display = 'block'; }
+function closeBgModal() { document.getElementById('bgModal').style.display = 'none'; }
+
+
 /* === Full-Screen Toggle === */
 function toggleFullScreen() {
   if (!document.fullscreenElement) {
@@ -149,11 +168,11 @@ const quotes = [
   "“The future starts today, not tomorrow.” - St. John Paul II",
   "“Never miss an opportunity to do good.” - St. Francis de Sales",
   "“Act and God will act, work and He will work.” - St. Joan of Arc",
-  "“Without work, it is impossible to have fun.” - St.Thomas Aquinas",
+  "“To love is to will the good of the other.” - Saint Thomas Aquinas",
   "“I want eternity. I was born for greater things.” - St. Stanislaus",
   "“Love God, serve God; everything is in that.” - St. Clare of Assisi",
   "“Be joyful, and keep your faith and your creed.” - St. David of Wales",
-  "“Life is short; our trials last but a moment.” - – St. Teresa of Avila",
+  "“Life is short; our trials last but a moment.” - St. Teresa of Avila",
   "“Holy Communion is the shortest and safest way to heaven.” - St. Pius X",
   "“I will spend my heaven doing good on earth.” - St. Thérèse of Lisieux",
   "“Do not let a day pass without doing some good in it.” - St. Philip Neri",
@@ -173,7 +192,7 @@ const quotes = [
    "“An ounce of charity is better than a hundred loads of reason.” - St. Robert Bellarmine",
   "“If you are what you should be, you will set the whole world on fire!” - St. Catherine of Siena",
   "“Darkness can only be scattered by light. Hatred can only be conquered by love.” - St. John Paul II",
-  "“Prayer is the foundation of the spiritual edifice. Prayer is all powerful.” -St. Josemaria Escriva",
+  "“Prayer is the foundation of the spiritual edifice. Prayer is all powerful.” - St. Josemaria Escriva",
   "“Who except God can give you peace? Has the world ever been able to satisfy the heart?” - St. Gerard Majella",
   "“Anyone who seeks truth seeks God, whether or not he realizes it.” - St. Teresa Benedicta of the Cross (Edith Stein)",
   "“I can’t do big things. But I want all I do, even the smallest thing, to be for the greater glory of God.” - St. Dominic Savio",
