@@ -2,8 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Pomodoro Web App</title>
+  <title>Catholic Pomodoro</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="favicon/favicon.ico" type="image/x-icon">
 </head>
 
 <body>
@@ -17,7 +18,7 @@
 
   <!-- Top Left: App Name -->
   <div class="top-left">
-    <h2>Pomodoro Web App</h2>
+    <h2>Catholic Pomodoro</h2>
   </div>
 
   <!-- Top Right: Quotes -->
@@ -27,8 +28,13 @@
 
   <!-- Center: Timer -->
   <div class="center-timer">
-    <h1>Pomodoro Timer</h1>
-    <div id="mode">Work Session</div>
+    <h1>Hello User</h1>
+    <div id="mode">Focus Time!</div>
+    <div class="mode-selector">
+      <button class="mode-btn active" data-mode="work" onclick="setMode('work')">Work</button>
+      <button class="mode-btn" data-mode="short" onclick="setMode('short')">Short Break</button>
+      <button class="mode-btn" data-mode="long" onclick="setMode('long')">Long Break</button>
+    </div>
     <div id="timer">25:00</div>
     <div class="timer-buttons">
       <button class="control" onclick="startTimer()">Start</button>

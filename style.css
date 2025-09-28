@@ -65,6 +65,29 @@ body {
 }
 .timer-buttons button:hover { background: #2980b9; }
 
+.mode-selector {
+  margin-top: 10px;
+}
+
+.mode-selector button {
+  margin: 0 5px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: none;
+  background: #9cbfd6;
+  color: white;
+  cursor: pointer;
+}
+
+.mode-selector button:hover {
+  background: #2980b9;
+}
+
+.mode-btn.active {
+  background-color: #3498db;
+  color: white;
+}
+
 /* === Top Left: App Name === */
 .top-left {
   position: fixed;
