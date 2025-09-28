@@ -1,3 +1,14 @@
+// Save when the user changes the name
+const userNameSpan = document.getElementById('userName');
+userNameSpan.addEventListener('input', () => {
+  localStorage.setItem('userName', userNameSpan.textContent);
+});
+
+// Load on page load
+if(localStorage.getItem('userName')){
+  userNameSpan.textContent = localStorage.getItem('userName');
+}
+
 /* === Timer Logic === */
 let workTime = 25*60, shortBreak = 0.5*60, longBreak = 15*60, cycles=0;
 let time = workTime, timerInterval, isRunning=false, mode="work";
