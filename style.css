@@ -65,6 +65,11 @@ body {
 }
 .timer-buttons button:hover { background: #2980b9; }
 
+.control:active {
+  transform: translateY(5px);
+  box-shadow: 0 0 0 #2980b9;
+}
+
 .mode-selector {
   margin-top: 10px;
 }
@@ -91,7 +96,7 @@ body {
 /* === Top Left: App Name === */
 .top-left {
   position: fixed;
-  top: 10px;
+  top: 5px;
   left: 10px;
   color: white;
   font-weight: bold;
@@ -102,7 +107,7 @@ body {
 /* === Top Right: Quotes === */
 .top-right {
   position: fixed;
-  top: 10px;
+  top: 20px;
   right: 10px;
   color: white;
   font-size: 1em;
@@ -143,20 +148,48 @@ body {
   gap: 5px;               /* spacing between items */
 }
 
+.menu-content.ambient-menu {
+  grid-template-columns: auto auto;
+  row-gap: 8px;
+  column-gap: 10px;
+  align-items: center;
+}
+
+.menu-content.ambient-menu > button {
+  grid-column: 1;
+}
+
+.menu-content.ambient-menu > .slider-container {
+  grid-column: 2;
+}
+
 .menu-content button {
   margin: 0 5px !important;
   font-size: 1em !important;
   color: White !important;
-  background: #2980b9 !important;; /* optional for visibility */
+  background: #184b6d !important; /* optional for visibility */
   border: none;
   border-radius: 5px;
 }
 
 .menu-content button:hover {
-  background: #65acdb !important;
+  background: #3498db !important;
+}
+
+.menu-content button.is-active {
+  background: #3498db !important;
+  color: #e6e6e6 !important;
 }
 
 /* Slider track */
+.slider-container {
+  display: none;
+}
+
+.slider-container.visible {
+  display: block;
+}
+
 input[type="range"] {
   -webkit-appearance: none;
   appearance: none;         /* Standard */
@@ -266,4 +299,3 @@ input[type=range]::-webkit-slider-thumb {
 #fullscreenBtn:hover {
   background: rgba(0,0,0,0.5)
 }
-

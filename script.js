@@ -10,8 +10,16 @@ if(localStorage.getItem('userName')){
 }
 
 /* === Timer Logic === */
-let workTime = 25*60, shortBreak = 0.5*60, longBreak = 15*60, cycles=0;
+let workTime = 25*60, shortBreak = 5*60, longBreak = 10*60, cycles=0;
 let time = workTime, timerInterval, isRunning=false, mode="work";
+
+function updateModeButtons(activeMode) {
+  document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
+  const activeBtn = document.querySelector(`.mode-btn[data-mode="${activeMode}"]`);
+  if (activeBtn) {
+    activeBtn.classList.add('active');
+  }
+}
 
 function updateDisplay() {
   let minutes = Math.floor(time/60);
@@ -19,6 +27,13 @@ function updateDisplay() {
   document.getElementById("timer").textContent = `${minutes}:${seconds.toString().padStart(2,'0')}`;
   document.getElementById("mode").textContent =
     mode==="work"?"Focus Time!":mode==="short"?"Take a break :)":"Take a break :)";
+
+    const button = document.getElementById("startPauseBtn");
+    if (!isRunning) {
+    button.textContent = "Start";
+  } else {
+    button.textContent = "Pause";
+  }
 }
 
 function switchMode(){ // Automatic time switching
@@ -30,6 +45,7 @@ function switchMode(){ // Automatic time switching
     mode="work"; 
     time=workTime; 
   }
+  updateModeButtons(mode);
   updateDisplay();
 }
 
@@ -42,17 +58,18 @@ function setMode(newMode) {
   else if (mode === "short") time = shortBreak;
   else time = longBreak;
 
-  // Remove active from all buttons
-  document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
-  // Add active to clicked button
-  document.querySelector(`.mode-btn[data-mode="${newMode}"]`).classList.add('active');
-
+  updateModeButtons(newMode);
+  
   updateDisplay();
 }
 
 function startTimer() {
   if (!isRunning) {
     isRunning = true;
+
+    time--;   // start counting instantly
+    updateDisplay();  // show immediate feedback
+
     timerInterval = setInterval(() => {
       if (time > 0) {
         time--;
@@ -68,7 +85,6 @@ function startTimer() {
         setTimeout(() => {
           alert("Time's up!");
           switchMode();
-          startTimer();
         }, 50);
 
       }
@@ -79,14 +95,29 @@ function startTimer() {
 function pauseTimer(){ clearInterval(timerInterval); isRunning=false; }
 function resetTimer(){ 
   clearInterval(timerInterval); isRunning=false; mode="work"; time=workTime; cycles=0; 
+  updateModeButtons(mode);
   updateDisplay(); 
 }
-updateDisplay();
+
+function toggleTimer() {
+  const button = document.getElementById("startPauseBtn");
+
+  if (!isRunning) {
+    startTimer();
+    button.textContent = "Pause";
+  } else {
+    pauseTimer();
+    button.textContent = "Start";
+  }
+}
 
 /* === Ambient Audio === */
 function playAmbient() {
   document.getElementById('rain').play();
   document.getElementById('cafe').play();
+  document.getElementById('bubbles').play();
+  document.getElementById('ocean').play();
+  document.getElementById('fire').play();
 }
 
 function setVolume(id, value) { 
@@ -97,7 +128,12 @@ function setVolume(id, value) {
 document.querySelectorAll('.menu-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     const content = btn.nextElementSibling;
-    content.style.display = content.style.display === 'block' ? 'none' : 'block';
+    const isOpen = content.style.display !== 'none' && content.style.display !== '';
+    if (isOpen) {
+      content.style.display = 'none';
+    } else {
+      content.style.display = content.classList.contains('ambient-menu') ? 'grid' : 'block';
+    }
   });
 });
 
@@ -110,12 +146,22 @@ document.addEventListener('click', (e) => {
   });
 });
 
-function toggleSound(id) {
+function toggleSound(id, buttonEl) {
   const audio = document.getElementById(id);
   if (audio.paused) {
     audio.play();
   } else {
     audio.pause();
+  }
+
+  if (buttonEl) {
+    buttonEl.classList.toggle('is-active', !audio.paused);
+  }
+
+  // Toggle the slider tied to the clicked sound button.
+  if (buttonEl && buttonEl.nextElementSibling && buttonEl.nextElementSibling.classList.contains('slider-container')) {
+    const slider = buttonEl.nextElementSibling;
+    slider.classList.toggle('visible');
   }
 }
 
@@ -147,9 +193,13 @@ function changeBackground(fileName) {
     body.style.background = `url('backgrounds/${fileName}') no-repeat center center fixed`;
     body.style.backgroundSize = 'cover';
 
-    // Example: dark overlay only for church or night images
-    if (fileName === 'church_interior.jpg' || fileName === 'night_sky.jpg') {
+    // Dark overlay for only specific images
+    if (fileName === 'church_interior.jpg' || fileName === '') {
       overlay.style.background = 'rgba(0,0,0,0.4)';
+    }
+    else if (fileName === 'pexels-diana-reyes-227887231-32858396.jpg' || fileName === 'pexels-daejeung-6480387.jpg' ||
+      fileName === 'pexels-pauldeetman-2695680.jpg') {
+      overlay.style.background = 'rgba(0, 0, 0, 0.2)';
     }
   }
 }
@@ -230,6 +280,6 @@ function showRandomQuote() {
   quoteText.textContent = random;
 }
 
-// Example: change quote every 30 seconds
-setInterval(showRandomQuote, 30000);
+// Example: change quote every 5 minutes
+setInterval(showRandomQuote, 5 * 60 * 1000);
 showRandomQuote();

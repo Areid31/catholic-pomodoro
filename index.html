@@ -42,8 +42,7 @@
     </div>
     <div id="timer">25:00</div>
     <div class="timer-buttons">
-      <button class="control" onclick="startTimer()">Start</button>
-      <button class="control" onclick="pauseTimer()">Pause</button>
+      <button class="control" onclick="toggleTimer()" id="startPauseBtn">Start</button>
       <button class="control" onclick="resetTimer()">Reset</button>
     </div>
   </div>
@@ -58,7 +57,7 @@
       <!-- Ambient Sounds Menu -->
       <div class="menu-wrapper">
         <button class="menu-btn" title="Ambient Sounds">🌧️</button>
-        <div class="menu-content">
+        <div class="menu-content ambient-menu">
           <button id="btn-rain" onclick="toggleSound('rain', this)">Rain</button>
           <div class="slider-container">
               <input type="range" min="0" max="1" step="0.01" value="0.5" onchange="setVolume('rain', this.value)">
@@ -66,6 +65,18 @@
           <button id="btn-cafe" onclick="toggleSound('cafe', this)">Cafe</button>
           <div class="slider-container">
               <input type="range" min="0" max="1" step="0.01" value="0.5" onchange="setVolume('cafe', this.value)">
+          </div>
+          <button id="btn-bubbles" onclick="toggleSound('bubbles', this)">Bubbles</button>
+          <div class="slider-container">
+              <input type="range" min="0" max="1" step="0.01" value="0.5" onchange="setVolume('bubbles', this.value)">
+          </div>
+          <button id="btn-ocean" onclick="toggleSound('ocean', this)">Ocean</button>
+          <div class="slider-container">
+              <input type="range" min="0" max="1" step="0.01" value="0.5" onchange="setVolume('ocean', this.value)">
+          </div>
+          <button id="btn-fire" onclick="toggleSound('fire', this)">Fire</button>
+          <div class="slider-container">
+              <input type="range" min="0" max="1" step="0.01" value="0.5" onchange="setVolume('fire', this.value)">
           </div>
         </div>
       </div>
@@ -76,7 +87,8 @@
         <div class="menu-content">
           <iframe width="300" height="150" 
             src="https://www.youtube.com/embed/7oijjSxs1ic?autoplay=0" 
-            frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
+            frameborder="0" referrerpolicy="strict-origin-when-cross-origin"
+            allow="autoplay; encrypted-media" allowfullscreen>
           </iframe>
         </div>
       </div>
@@ -102,6 +114,15 @@
   <audio id="cafe" loop>
     <source src="audio/cafe-noise-32940.mp3" type="audio/mpeg">
   </audio>
+   <audio id="bubbles" loop>
+    <source src="audio/liecio-bubbles-underwater-258281.mp3" type="audio/mpeg">
+  </audio>
+   <audio id="ocean" loop>
+    <source src="audio/richardmultimedia-ocean-waves-sound-01-321570.mp3" type="audio/mpeg">
+  </audio>
+     <audio id="fire" loop>
+    <source src="audio/soundreality-fire-sound-334130.mp3" type="audio/mpeg">
+  </audio>
 
   <!-- Bottom Right Panel -->
   <div class="bottom-right-panel">
@@ -117,6 +138,16 @@
           <img src="backgrounds/pexels-aleksandar069-11239782.jpg" alt="Sunset" onclick="changeBackground('pexels-aleksandar069-11239782.jpg')">
           <img src="backgrounds/pexels-canaros-2182359.jpg" alt="Rain" onclick="changeBackground('pexels-canaros-2182359.jpg')">
           <img src="backgrounds/pexels-castorlystock-3836343.jpg" alt="Lofi Video" onclick="changeBackground('pexels-castorlystock-3836343.jpg')">
+          <img src="backgrounds/pexels-barbara-barbosa-2859157-25294110.jpg" alt="Lofi Video" 
+          onclick="changeBackground('pexels-barbara-barbosa-2859157-25294110.jpg')">
+          <img src="backgrounds/pexels-daejeung-6480387.jpg" alt="Rain" onclick="changeBackground('pexels-daejeung-6480387.jpg')">
+          <img src="backgrounds/pexels-diana-reyes-227887231-32858396.jpg" alt="Rain"
+          onclick="changeBackground('pexels-diana-reyes-227887231-32858396.jpg')">
+          <img src="backgrounds/pexels-roger-ce-311041755-14242351.jpg" alt="Rain" 
+          onclick="changeBackground('pexels-roger-ce-311041755-14242351.jpg')">
+          <img src="backgrounds/pexels-pauldeetman-2695680.jpg" alt="Lofi Video" onclick="changeBackground('pexels-pauldeetman-2695680.jpg')">
+          <img src="backgrounds/pexels-dan-borges-2090916.jpg" alt="Lofi Video" onclick="changeBackground('pexels-dan-borges-2090916.jpg')">
+          <img src="backgrounds/pexels-pixabay-236310.jpg" alt="Lofi Video" onclick="changeBackground('pexels-pixabay-236310.jpg')">
         </div>
       </div>
     </div>
