@@ -34,7 +34,7 @@
     <h1>
       Hello <span id="userName" contenteditable="true" title="Click to edit your name">[EnterName]</span>
     </h1>
-    <div id="mode">Focus Time!</div>
+    <div id="mode"></div>
     <div class="mode-selector">
       <button class="mode-btn active" data-mode="work" onclick="setMode('work')">Work</button>
       <button class="mode-btn" data-mode="short" onclick="setMode('short')">Short Break</button>
@@ -44,6 +44,18 @@
     <div class="timer-buttons">
       <button class="control" onclick="toggleTimer()" id="startPauseBtn">Start</button>
       <button class="control" onclick="resetTimer()">Reset</button>
+      <div class="interval-menu-wrapper">
+        <button class="control interval-btn" id="intervalBtn" onclick="toggleIntervalMenu()" title="Pomodoro Presets">
+          <i class="fa-regular fa-clock"></i>
+        </button>
+        <div id="intervalMenu" class="interval-menu">
+          <button type="button" onclick="applyIntervalPreset(25, 5, 'Classic Focus')">25 / 5 - Classic Focus</button>
+          <button type="button" onclick="applyIntervalPreset(50, 10, 'Deep Work Flow')">50 / 10 - Deep Work Flow</button>
+          <button type="button" onclick="applyIntervalPreset(52, 17, 'Rhythm 52')">52 / 17 - Rhythm 52</button>
+          <button type="button" onclick="applyIntervalPreset(90, 20, 'Endurance Block')">90 / 20 - Endurance Block</button>
+          <button type="button" onclick="applyIntervalPreset(15, 3, 'Quick Sprint')">15 / 3 - Quick Sprint</button>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -81,27 +93,28 @@
         </div>
       </div>
       
-      <!-- YouTube Menu -->
+      <!-- Music Menu -->
       <div class="menu-wrapper">
-        <button class="menu-btn" title="Lofi YouTube">🎵</button>
-        <div class="menu-content">
-          <iframe width="300" height="150" 
-            src="https://www.youtube.com/embed/7oijjSxs1ic?autoplay=0" 
-            frameborder="0" referrerpolicy="strict-origin-when-cross-origin"
-            allow="autoplay; encrypted-media" allowfullscreen>
-          </iframe>
-        </div>
-      </div>
-    
-      <!-- Spotify Menu -->
-      <div class="menu-wrapper">
-        <button class="menu-btn" title="Spotify">🎶</button>
-        <div class="menu-content">
-          <iframe style="border-radius:12px" 
-            src="https://open.spotify.com/embed/artist/4ZA0g9A7x6NyiDoowyyKNF?utm_source=generator" 
-            width="300" height="80" frameborder="0" 
-            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture">
-          </iframe>
+        <button class="menu-btn" title="Music">🎧</i></button>
+        <div class="menu-content music-menu">
+          <div class="music-choices">
+            <button type="button" onclick="openMusicSource('youtube')">YouTube &gtdot;</button>
+            <button type="button" onclick="openMusicSource('spotify')">Spotify &gtdot;</button>
+          </div>
+          <div id="music-youtube" class="music-embed">
+            <iframe width="300" height="150" 
+              src="https://www.youtube.com/embed/7oijjSxs1ic?autoplay=0" 
+              frameborder="0" referrerpolicy="strict-origin-when-cross-origin"
+              allow="autoplay; encrypted-media" allowfullscreen>
+            </iframe>
+          </div>
+          <div id="music-spotify" class="music-embed">
+            <iframe style="border-radius:12px" 
+              src="https://open.spotify.com/embed/artist/4ZA0g9A7x6NyiDoowyyKNF?utm_source=generator" 
+              width="300" height="80" frameborder="0" 
+              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture">
+            </iframe>
+          </div>
         </div>
       </div>
     </div>    
@@ -148,6 +161,8 @@
           <img src="backgrounds/pexels-pauldeetman-2695680.jpg" alt="Lofi Video" onclick="changeBackground('pexels-pauldeetman-2695680.jpg')">
           <img src="backgrounds/pexels-dan-borges-2090916.jpg" alt="Lofi Video" onclick="changeBackground('pexels-dan-borges-2090916.jpg')">
           <img src="backgrounds/pexels-pixabay-236310.jpg" alt="Lofi Video" onclick="changeBackground('pexels-pixabay-236310.jpg')">
+          <img src="backgrounds/pexels-pixabay-208425.jpg" alt="Lofi Video" onclick="changeBackground('pexels-pixabay-208425.jpg')">
+          <img src="backgrounds/pexels-reneterp-1545339.jpg" alt="Lofi Video" onclick="changeBackground('pexels-reneterp-1545339.jpg')">
         </div>
       </div>
     </div>

@@ -12,6 +12,7 @@ if(localStorage.getItem('userName')){
 /* === Timer Logic === */
 let workTime = 25*60, shortBreak = 5*60, longBreak = 10*60, cycles=0;
 let time = workTime, timerInterval, isRunning=false, mode="work";
+const POMODOROS_PER_CYCLE = 4;
 
 function updateModeButtons(activeMode) {
   document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
@@ -21,12 +22,23 @@ function updateModeButtons(activeMode) {
   }
 }
 
+function updateCycleDots() {
+  const modeEl = document.getElementById("mode");
+  const completed = Math.min(cycles, POMODOROS_PER_CYCLE);
+  modeEl.innerHTML = "";
+
+  for (let i = 1; i <= POMODOROS_PER_CYCLE; i++) {
+    const dot = document.createElement("span");
+    dot.className = i <= completed ? "cycle-dot active" : "cycle-dot";
+    modeEl.appendChild(dot);
+  }
+}
+
 function updateDisplay() {
   let minutes = Math.floor(time/60);
   let seconds = time%60;
   document.getElementById("timer").textContent = `${minutes}:${seconds.toString().padStart(2,'0')}`;
-  document.getElementById("mode").textContent =
-    mode==="work"?"Focus Time!":mode==="short"?"Take a break :)":"Take a break :)";
+  updateCycleDots();
 
     const button = document.getElementById("startPauseBtn");
     if (!isRunning) {
@@ -38,10 +50,13 @@ function updateDisplay() {
 
 function switchMode(){ // Automatic time switching
   if(mode==="work"){ 
-    cycles++; 
-    mode=cycles%4===0?"long":"short"; 
+    cycles++;
+    mode = cycles >= POMODOROS_PER_CYCLE ? "long" : "short";
     time=mode==="long"?longBreak:shortBreak; 
   } else { 
+    if (mode === "long") {
+      cycles = 0; // restart count after completing a full 4-pomodoro cycle
+    }
     mode="work"; 
     time=workTime; 
   }
@@ -111,6 +126,46 @@ function toggleTimer() {
   }
 }
 
+function toggleIntervalMenu() {
+  const menu = document.getElementById("intervalMenu");
+  if (!menu) return;
+  menu.style.display = menu.style.display === "block" ? "none" : "block";
+}
+
+function applyIntervalPreset(workMinutes, shortBreakMinutes, presetName) {
+  workTime = workMinutes * 60;
+  shortBreak = shortBreakMinutes * 60;
+  longBreak = shortBreak * 2;
+
+  clearInterval(timerInterval);
+  isRunning = false;
+  mode = "work";
+  cycles = 0;
+  time = workTime;
+
+  updateModeButtons(mode);
+  updateDisplay();
+
+  const menu = document.getElementById("intervalMenu");
+  if (menu) {
+    menu.style.display = "none";
+  }
+
+  const intervalBtn = document.getElementById("intervalBtn");
+  if (intervalBtn && presetName) {
+    intervalBtn.title = `Pomodoro Presets (${presetName})`;
+  }
+}
+
+document.addEventListener("click", (e) => {
+  const wrapper = document.querySelector(".interval-menu-wrapper");
+  const menu = document.getElementById("intervalMenu");
+  if (!wrapper || !menu) return;
+  if (!wrapper.contains(e.target)) {
+    menu.style.display = "none";
+  }
+});
+
 /* === Ambient Audio === */
 function playAmbient() {
   document.getElementById('rain').play();
@@ -132,6 +187,9 @@ document.querySelectorAll('.menu-btn').forEach(btn => {
     if (isOpen) {
       content.style.display = 'none';
     } else {
+      if (content.classList.contains('music-menu')) {
+        resetMusicMenu();
+      }
       content.style.display = content.classList.contains('ambient-menu') ? 'grid' : 'block';
     }
   });
@@ -165,6 +223,28 @@ function toggleSound(id, buttonEl) {
   }
 }
 
+function resetMusicMenu() {
+  const choices = document.querySelector('.music-menu .music-choices');
+  const youtube = document.getElementById('music-youtube');
+  const spotify = document.getElementById('music-spotify');
+  if (!choices || !youtube || !spotify) return;
+
+  choices.style.display = 'flex';
+  youtube.style.display = 'none';
+  spotify.style.display = 'none';
+}
+
+function openMusicSource(source) {
+  const choices = document.querySelector('.music-menu .music-choices');
+  const youtube = document.getElementById('music-youtube');
+  const spotify = document.getElementById('music-spotify');
+  if (!choices || !youtube || !spotify) return;
+
+  choices.style.display = 'none';
+  youtube.style.display = source === 'youtube' ? 'block' : 'none';
+  spotify.style.display = source === 'spotify' ? 'block' : 'none';
+}
+
 /* === Background Chooser === */
 function changeBackground(fileName) {
   const body = document.body;
@@ -194,10 +274,10 @@ function changeBackground(fileName) {
     body.style.backgroundSize = 'cover';
 
     // Dark overlay for only specific images
-    if (fileName === 'church_interior.jpg' || fileName === '') {
+    if (fileName === 'church_interior.jpg' || fileName === 'pexels-diana-reyes-227887231-32858396.jpg') {
       overlay.style.background = 'rgba(0,0,0,0.4)';
     }
-    else if (fileName === 'pexels-diana-reyes-227887231-32858396.jpg' || fileName === 'pexels-daejeung-6480387.jpg' ||
+    else if (fileName === '' || fileName === 'pexels-daejeung-6480387.jpg' ||
       fileName === 'pexels-pauldeetman-2695680.jpg') {
       overlay.style.background = 'rgba(0, 0, 0, 0.2)';
     }

@@ -52,7 +52,23 @@ body {
 }
 
 #timer { font-size: 9em; margin: 20px; font-weight: 900; font-family: 'Inter', sans-serif;}
-#mode { font-size: 1.2em; margin-bottom: 10px; }
+#mode {
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.cycle-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.cycle-dot.active {
+  background: #ffffff;
+}
 .timer-buttons button {
   padding: 10px 20px;
   margin: 5px;
@@ -64,6 +80,40 @@ body {
   background: #3498db;
 }
 .timer-buttons button:hover { background: #2980b9; }
+
+.interval-menu-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.interval-btn {
+  min-width: 44px;
+  background: transparent !important;
+}
+
+.interval-btn:hover {
+  background: rgba(0, 0, 0, 0.3) !important;
+}
+
+.interval-menu {
+  display: none;
+  position: absolute;
+  left: 0;
+  top: calc(100% + 6px);
+  min-width: 240px;
+  background: rgba(0, 0, 0, 0.9);
+  border-radius: 8px;
+  padding: 8px;
+  z-index: 30;
+}
+
+.interval-menu button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  margin: 4px 0;
+  font-size: 0.95em;
+}
 
 .control:active {
   transform: translateY(5px);
@@ -161,6 +211,40 @@ body {
 
 .menu-content.ambient-menu > .slider-container {
   grid-column: 2;
+}
+
+.menu-content.music-menu {
+  min-width: 100px;
+  white-space: normal;
+  padding: 8px;
+}
+
+.menu-content.music-menu  button {
+  margin: 0 5px !important;
+  font-size: 1em !important;
+  color: White !important;
+  background: rgba(0,0,0,0.1) !important; /* optional for visibility */
+  border:none;
+  border-radius: 4px;
+}
+
+.menu-content.music-menu button:hover {
+  background: #3498db !important;
+}
+
+.music-choices {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.music-choices button {
+  text-align: right;
+  width: 100px;
+}
+
+.music-embed {
+  display: none;
 }
 
 .menu-content button {
@@ -264,8 +348,10 @@ input[type=range]::-webkit-slider-thumb {
   padding: 20px;
   margin: 50px auto;
   width: 80%;
-  max-width: 600px;
+  max-width: 650px;
   border-radius: 8px;
+  max-height: 600px;
+  overflow-y: auto
 }
 .bg-grid {
   display: flex;
@@ -281,6 +367,8 @@ input[type=range]::-webkit-slider-thumb {
 .close {
   cursor: pointer;
   float: right;
+  position: sticky;
+  top: 0;
   font-size: 2em;
 }
 
